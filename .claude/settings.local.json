@@ -24,7 +24,15 @@
       "Bash(curl -s -o /dev/null -w \"js:%{http_code}\\\\n\" http://127.0.0.1:8765/js/main.js)",
       "Bash(curl -s -o /dev/null -w \"menu.json:%{http_code}\\\\n\" http://127.0.0.1:8765/data/menu.json)",
       "Bash(curl -s -o /dev/null -w \"gallery.json:%{http_code}\\\\n\" http://127.0.0.1:8765/data/gallery.json)",
-      "Bash(curl -s http://127.0.0.1:8765/index.html)"
+      "Bash(curl -s http://127.0.0.1:8765/index.html)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npx -y playwright install chromium)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(node screenshot3.mjs)",
+      "Bash(node screenshot_menu.mjs)",
+      "Bash(node screenshot_full.mjs)"
     ]
   }
 }

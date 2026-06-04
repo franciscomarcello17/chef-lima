@@ -245,6 +245,11 @@ function bindCarousel(root) {
   }, { passive: true });
 
   requestAnimationFrame(() => moveTo(0, false));
+  return {
+    moveTo: (i, animated) => moveTo(i, animated),
+    getIdx: () => idx,
+    getMaxIdx: () => maxIdx()
+  };
 }
 
 function dishCardHTML(dish, segmentTag) {
@@ -309,9 +314,11 @@ async function renderMenu() {
   const dishes   = data.dishes   || [];
   if (!segments.length) return;
 
+  let currentSeg = Math.floor(Math.random() * segments.length);
+
   // Tabs
   tabsRoot.innerHTML = segments.map((seg, i) => `
-    <button class="menu__tab ${i === 1 ? 'active' : ''}" data-tab="${escHtml(seg.id)}" type="button">
+    <button class="menu__tab${i === currentSeg ? ' active' : ''}" data-tab="${escHtml(seg.id)}" type="button">
       ${escHtml(seg.label)}
     </button>
   `).join('');
@@ -323,72 +330,55 @@ async function renderMenu() {
     return `<div class="menu__carousel" data-segment="${escHtml(seg.id)}">${buildCarousel(slides)}</div>`;
   }).join('');
 
-  carouselsRoot.setAttribute('data-active', segments[1].id);
+  carouselsRoot.setAttribute('data-active', segments[currentSeg].id);
 
-  // Tab switching
-  tabsRoot.querySelectorAll('.menu__tab').forEach(tab => {
+  const tabs = Array.from(tabsRoot.querySelectorAll('.menu__tab'));
+
+  function activateSeg(i) {
+    currentSeg = i;
+    tabs.forEach((t, ti) => t.classList.toggle('active', ti === i));
+    carouselsRoot.setAttribute('data-active', segments[i].id);
+  }
+
+  // Bind all carousels
+  const controls = Array.from(carouselsRoot.querySelectorAll('.carousel')).map(bindCarousel);
+
+  // Random starting slide (after layout paint)
+  setTimeout(() => {
+    const ctrl = controls[currentSeg];
+    if (ctrl && ctrl.getMaxIdx() > 0) {
+      ctrl.moveTo(Math.floor(Math.random() * (ctrl.getMaxIdx() + 1)), false);
+    }
+  }, 120);
+
+  // Tab click — pause auto-advance for a bit then resume
+  let autoTimer;
+  tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-tab');
-      tabsRoot.querySelectorAll('.menu__tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      carouselsRoot.setAttribute('data-active', target);
+      activateSeg(i);
+      controls[i].moveTo(0);
+      clearInterval(autoTimer);
+      autoTimer = setInterval(autoAdvance, 4000);
     });
   });
 
-  // Bind carousels
-  carouselsRoot.querySelectorAll('.carousel').forEach(bindCarousel);
+  function autoAdvance() {
+    const ctrl = controls[currentSeg];
+    if (!ctrl) return;
+    if (ctrl.getIdx() >= ctrl.getMaxIdx()) {
+      const nextSeg = (currentSeg + 1) % segments.length;
+      activateSeg(nextSeg);
+      controls[nextSeg].moveTo(0);
+    } else {
+      ctrl.moveTo(ctrl.getIdx() + 1);
+    }
+  }
+
+  autoTimer = setInterval(autoAdvance, 4000);
 
   // Reveal animation
   observeReveal(carouselsRoot.querySelectorAll('.dish-card'));
 }
-
-// ----- GALLERY -----
-async function renderGallery() {
-  const filtersRoot = document.getElementById('galleryFilters');
-  const carouselRoot = document.getElementById('galleryCarousel');
-  if (!filtersRoot || !carouselRoot) return;
-
-  let data;
-  try {
-    data = await loadJSON('data/gallery.json');
-  } catch (err) {
-    console.error(err);
-    carouselRoot.innerHTML = `<p style="text-align:center;color:var(--fg-2)">Não foi possível carregar a galeria.</p>`;
-    return;
-  }
-
-  const categories = data.categories || [{ id: 'all', label: 'Todos' }];
-  const items      = data.items      || [];
-
-  filtersRoot.innerHTML = categories.map((cat, i) => `
-    <button class="gallery__filter ${i === 0 ? 'active' : ''}" data-filter="${escHtml(cat.id)}" type="button">
-      ${escHtml(cat.label)}
-    </button>
-  `).join('');
-
-  function paint(filter) {
-    const visible = filter === 'all' ? items : items.filter(i => i.category === filter);
-    const slides = visible.map(galleryItemHTML).join('') ||
-      `<p style="padding:2rem;color:var(--fg-2)">Nenhuma imagem nesta categoria.</p>`;
-    carouselRoot.innerHTML = buildCarousel(slides, 'gallery__inner-carousel');
-    const carousel = carouselRoot.querySelector('.carousel');
-    if (carousel) bindCarousel(carousel);
-    observeReveal(carouselRoot.querySelectorAll('.gallery__item'));
-  }
-
-  paint('all');
-
-  filtersRoot.querySelectorAll('.gallery__filter').forEach(btn => {
-    btn.addEventListener('click', () => {
-      filtersRoot.querySelectorAll('.gallery__filter').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      paint(btn.getAttribute('data-filter'));
-    });
-  });
-}
-
-// We render inside the gallery section element (which is wrapped in a .container in HTML)
-// renderMenu / renderGallery are kicked off after revealObserver is defined below.
 
 // =====================================================
 // TESTIMONIALS SLIDER
@@ -432,11 +422,13 @@ function resetAutoSlide() {
   startAutoSlide();
 }
 
-prevBtn.addEventListener('click', () => { showTestimonial(currentTestimonial - 1); resetAutoSlide(); });
-nextBtn.addEventListener('click', () => { showTestimonial(currentTestimonial + 1); resetAutoSlide(); });
+if (prevBtn) prevBtn.addEventListener('click', () => { showTestimonial(currentTestimonial - 1); resetAutoSlide(); });
+if (nextBtn) nextBtn.addEventListener('click', () => { showTestimonial(currentTestimonial + 1); resetAutoSlide(); });
 
-createDots();
-startAutoSlide();
+if (testimonialCards.length) {
+  createDots();
+  startAutoSlide();
+}
 
 const slider = document.getElementById('testimonialsSlider');
 if (slider) {
@@ -585,4 +577,25 @@ updateActiveNav();
 toggleBackToTop();
 
 renderMenu();
-renderGallery();
+
+// =====================================================
+// SERVICES CAROUSEL
+// =====================================================
+function initServicesCarousel() {
+  const el = document.getElementById('servicesCarousel');
+  if (!el) return;
+  const ctrl = bindCarousel(el);
+
+  setTimeout(() => {
+    if (ctrl && ctrl.getMaxIdx() > 0) {
+      ctrl.moveTo(Math.floor(Math.random() * (ctrl.getMaxIdx() + 1)), false);
+    }
+  }, 120);
+
+  setInterval(() => {
+    if (!ctrl) return;
+    ctrl.moveTo(ctrl.getIdx() >= ctrl.getMaxIdx() ? 0 : ctrl.getIdx() + 1);
+  }, 4000);
+}
+
+initServicesCarousel();

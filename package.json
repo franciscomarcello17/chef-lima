@@ -12,8 +12,21 @@
     "serve": "npx live-server --port=3000 --open=index.html"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
+    "playwright": "^1.60.0",
     "sass": "^1.69.5",
-    "typescript": "^5.3.3",
-    "concurrently": "^8.2.2"
-  }
+    "typescript": "^5.3.3"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franciscomarcello17/cheflimagastronomia.com.br.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/franciscomarcello17/cheflimagastronomia.com.br/issues"
+  },
+  "homepage": "https://github.com/franciscomarcello17/cheflimagastronomia.com.br#readme"
 }

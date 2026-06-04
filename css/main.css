@@ -177,7 +177,7 @@ input, textarea, select { font-family: inherit; }
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .section-header .section-subtitle { margin: 0 auto; }
@@ -670,7 +670,7 @@ input, textarea, select { font-family: inherit; }
    ABOUT
    ===================================================== */
 .about {
-  padding: 7rem 0;
+  padding: 5rem 0;
 }
 
 .about__grid {
@@ -856,14 +856,13 @@ input, textarea, select { font-family: inherit; }
    SERVICES
    ===================================================== */
 .services {
-  padding: 7rem 0;
+  padding: 5rem 0;
   background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
 }
 
-.services__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
+.services__carousel .carousel__slide {
+  flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+  max-width: calc((100% - 2 * 1.25rem) / 3);
 }
 
 .service-card {
@@ -969,7 +968,7 @@ input, textarea, select { font-family: inherit; }
 }
 .service-card__media {
   width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -1034,7 +1033,7 @@ input, textarea, select { font-family: inherit; }
 /* =====================================================
    MENU / ESPECIALIDADES
    ===================================================== */
-.menu { padding: 7rem 0; }
+.menu { padding: 5rem 0; }
 
 .menu__tabs {
   display: flex;
@@ -1071,8 +1070,8 @@ input, textarea, select { font-family: inherit; }
 
 .menu__footer {
   text-align: center;
-  margin-top: 3rem;
-  padding-top: 3rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid rgba(201,168,76,0.12);
 }
 
@@ -1102,14 +1101,15 @@ input, textarea, select { font-family: inherit; }
 .dish-card__img {
   display: block;
   width: 100%;
-  height: 220px;
+  height: 340px;
   object-fit: cover;
   background: linear-gradient(135deg, rgba(10,10,10,0.6), rgba(74,26,38,0.4));
+  filter: brightness(1.12) contrast(1.05);
   transition: transform var(--transition-slow), filter var(--transition);
 }
 
 .dish-card:hover .dish-card__img {
-  filter: brightness(1.1);
+  filter: brightness(1.22) contrast(1.05);
   transform: scale(1.04);
 }
 
@@ -1118,7 +1118,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .dish-card__body {
-  padding: 1.25rem;
+  padding: 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1298,7 +1298,7 @@ input, textarea, select { font-family: inherit; }
 
 /* Gallery slides — taller and a touch wider for visual impact */
 .gallery__carousel .carousel__slide {
-  height: 320px;
+  height: 360px;
 }
 
 .menu__carousels .menu__carousel { display: none; }
@@ -1317,11 +1317,16 @@ input, textarea, select { font-family: inherit; }
   .carousel {
     gap: 0.35rem;
   }
-  
-  .carousel__slide { 
+
+  .carousel__slide {
     flex: 0 0 calc((100% - 2.5rem) / 3);
   }
-  
+
+  .services__carousel .carousel__slide {
+    flex: 0 0 calc((100% - 1.25rem) / 2);
+    max-width: calc((100% - 1.25rem) / 2);
+  }
+
   .carousel__btn {
     width: 40px;
     height: 40px;
@@ -1335,27 +1340,31 @@ input, textarea, select { font-family: inherit; }
     gap: 0.25rem;
     padding: 0;
   }
-  
+
   .carousel__viewport {
     padding: 0.25rem 0 0.75rem 0;
   }
-  
+
   .carousel__track {
     gap: 1rem;
   }
-  
-  .carousel__slide { 
+
+  .carousel__slide {
     flex: 0 0 calc((100% - 1rem) / 2);
   }
-  
+
   .carousel__btn {
     width: 36px;
     height: 36px;
     font-size: 0.85rem;
   }
-  
-  .gallery__carousel .carousel__slide { 
-    height: 260px;
+
+  .gallery__carousel .carousel__slide {
+    height: 300px;
+  }
+
+  .service-card__media {
+    height: 240px;
   }
 }
 
@@ -1364,26 +1373,39 @@ input, textarea, select { font-family: inherit; }
   .carousel {
     gap: 0.15rem;
   }
-  
+
   .carousel__viewport {
     padding: 0.25rem 0 0.5rem 0;
   }
-  
+
   .carousel__track {
     gap: 0.875rem;
   }
-  
-  .carousel__slide { 
+
+  .carousel__slide {
     flex: 0 0 calc(100% - 1rem);
     max-width: calc(100% - 1rem);
   }
-  
-  .gallery__carousel .carousel__slide { 
-    height: 240px;
+
+  .gallery__carousel .carousel__slide {
+    height: 280px;
   }
-  
-  .carousel__btn { 
-    width: 34px; 
+
+  .dish-card__img {
+    height: 300px;
+  }
+
+  .service-card__media {
+    height: 260px;
+  }
+
+  .services__carousel .carousel__slide {
+    flex: 0 0 calc(100% - 1rem);
+    max-width: calc(100% - 1rem);
+  }
+
+  .carousel__btn {
+    width: 34px;
     height: 34px;
     font-size: 0.8rem;
   }
@@ -1394,24 +1416,24 @@ input, textarea, select { font-family: inherit; }
   .carousel {
     gap: 0.1rem;
   }
-  
+
   .carousel__track {
     gap: 0.75rem;
   }
-  
-  .carousel__slide { 
+
+  .carousel__slide {
     flex: 0 0 calc(100% - 0.5rem);
     max-width: calc(100% - 0.5rem);
   }
-  
-  .carousel__btn { 
-    width: 32px; 
+
+  .carousel__btn {
+    width: 32px;
     height: 32px;
     font-size: 0.75rem;
   }
-  
-  .gallery__carousel .carousel__slide { 
-    height: 220px;
+
+  .gallery__carousel .carousel__slide {
+    height: 260px;
   }
 }
 
@@ -1449,7 +1471,6 @@ input, textarea, select { font-family: inherit; }
    o scroll tátil dos carrosseis no iOS Safari. Os containers internos
    (.menu__carousels, .gallery__carousel) já contêm o overflow. */
 .badges,
-.services,
 .cta-banner,
 .how-it-works,
 .testimonials,
@@ -1563,6 +1584,14 @@ input, textarea, select { font-family: inherit; }
     max-width: 360px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .how-step {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .how-step__number {
+    font-size: 2.5rem;
   }
 }
 
@@ -1702,7 +1731,7 @@ input, textarea, select { font-family: inherit; }
 /* =====================================================
    CONTACT
    ===================================================== */
-.contact { padding: 7rem 0; }
+.contact { padding: 5rem 0; }
 
 .contact__grid {
   display: grid;
@@ -2116,13 +2145,19 @@ input, textarea, select { font-family: inherit; }
 
 @media (max-width: 768px) {
   :root[data-theme="light"] .hero__overlay {
-    background: rgba(250,248,244,0.80);
+    background: linear-gradient(to top, rgba(250,248,244,0.88) 0%, rgba(250,248,244,0.45) 60%, rgba(250,248,244,0.15) 100%);
+  }
+  :root[data-theme="light"] .hero__photo-wrapper {
+    opacity: 0.7;
   }
 }
 
 @media (max-width: 576px) {
   :root[data-theme="light"] .hero__overlay {
-    background: rgba(250,248,244,0.85);
+    background: linear-gradient(to top, rgba(250,248,244,0.90) 0%, rgba(250,248,244,0.50) 60%, rgba(250,248,244,0.15) 100%);
+  }
+  :root[data-theme="light"] .hero__photo-wrapper {
+    opacity: 0.7;
   }
 }
 
@@ -2251,6 +2286,7 @@ input, textarea, select { font-family: inherit; }
 
   .about__grid { grid-template-columns: 1fr; gap: 3rem; }
   .about__content { padding-left: 0; }
+  .about__visual { display: none; }
 
   .about__quote-card {
     position: relative;
@@ -2268,13 +2304,14 @@ input, textarea, select { font-family: inherit; }
 
 /* Medium (≤ 768px) */
 @media (max-width: 768px) {
-  /* Hero — esconde foto do chef no mobile */
-  .hero__photo-wrapper { display: none; }
+  /* Hero — foto vira fundo no mobile */
+  .hero__photo-wrapper {
+    top: 80px;
+    width: 100%;
+    opacity: 0.45;
+  }
 
-  /* Hero — tablet portrait */
-  .hero__eyebrow::before { display: none; }
-
-  .hero__overlay { background: rgba(10,10,10,0.55); }
+  .hero__overlay { background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.55) 60%, rgba(10,10,10,0.3) 100%); }
 
   .hero__title { font-size: clamp(2.2rem, 9vw, 3.2rem); }
 
@@ -2298,9 +2335,19 @@ input, textarea, select { font-family: inherit; }
 @media (max-width: 576px) {
   .services__grid { grid-template-columns: 1fr; }
 
-  .footer__grid { grid-template-columns: 1fr; }
+  /* Footer compacto no mobile */
+  .footer { padding: 2rem 0 1rem; }
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .footer__links { display: none; }
+  .footer__services { display: none; }
+  .footer__desc { display: none; }
+  .footer__grid .footer__brand { grid-column: 1 / -1; }
 
-  .footer__bottom { flex-direction: column; text-align: center; }
+  .footer__bottom { flex-direction: column; text-align: center; padding-top: 1rem; }
 
   .whatsapp-float { bottom: 1.5rem; right: 1.5rem; width: 54px; height: 54px; font-size: 1.5rem; }
   .back-to-top { bottom: 1.5rem; left: 1.5rem; }
@@ -2319,7 +2366,8 @@ input, textarea, select { font-family: inherit; }
     background: rgba(10,10,10,0.72);
   }
 
-  .hero__availability { justify-content: center; }
+  /* Esconde badge de disponibilidade no mobile */
+  .hero__availability { display: none; }
 
   .hero__eyebrow { justify-content: center; }
 
@@ -2328,27 +2376,77 @@ input, textarea, select { font-family: inherit; }
     padding: 2rem 0 3rem;
   }
 
-  .hero__title { font-size: clamp(2rem, 10vw, 2.8rem); }
+  .hero__title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
 
   .hero__subtitle { font-size: 0.9rem; }
 
+  /* Botões empilhados com margem lateral */
   .hero__actions {
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem;
+    padding: 0 1.5rem;
   }
 
-  .hero__actions .btn { width: 100%; max-width: 320px; }
+  .hero__actions .btn {
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.85rem;
+  }
 
-  .cta-banner { padding: 4rem 0; }
+  /* Badges menores no mobile */
+  .badge-item { padding: 0.75rem 0.5rem; }
+  .badge-item__number { font-size: 1.6rem; }
+  .badge-item__label { font-size: 0.6rem; }
 
-  .about,
+  /* Esconde specialty tags e botão fale com chef no mobile */
+  .about__specialties { display: none; }
+  .about__content > .btn { display: none; }
+
+  .cta-banner { padding: 2.5rem 0; }
+
+  .about { padding: 2rem 0; }
+
   .services,
   .menu,
-  .gallery,
   .testimonials,
-  .contact { padding: 5rem 0; }
+  .contact { padding: 2.5rem 0; }
 
-  .section-header { margin-bottom: 2.5rem; }
+  .section-header { margin-bottom: 1.25rem; }
+
+  .how-it-works { padding: 2.5rem 0; }
+
+  /* Carrossel mobile: botões sobrepostos ao card */
+  .carousel { position: relative; }
+
+  .carousel__btn {
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50%);
+    z-index: 4;
+    width: 34px;
+    height: 34px;
+    font-size: 0.75rem;
+  }
+
+  .carousel__btn--prev { left: 0.5rem; }
+  .carousel__btn--next { right: 0.5rem; }
+
+  .services__carousel .carousel__slide,
+  .menu__carousels .carousel__slide {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Imagens maiores dentro dos cards mobile */
+  .service-card__media { height: 320px; }
+  .dish-card__img { height: 340px; }
+
+  .about__visual > img {
+    max-height: 420px;
+  }
+
+  .about__quote-card { display: none; }
 
   .gallery__filters,
   .menu__tabs { gap: 0.35rem; }
