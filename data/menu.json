@@ -23,7 +23,36 @@
       "image": "images/entradas/camarao-catupiry.jpg",
       "segment": "entradas"
     },
-
+    {
+      "title": "Carpaccio de Salmão",
+      "description": "Finas lâminas de salmão fresco, alcaparras, limão siciliano e lascas de parmesão.",
+      "image": "images/entradas/carpaccio-salmao.jpeg",
+      "segment": "entradas"
+    },
+    {
+      "title": "Mesa de Frios para 100 Pessoas",
+      "description": "Seleção especial de queijos, embutidos, pães artesanais, azeitonas e geleias.",
+      "image": "images/entradas/mesa-frios-100p.mp4",
+      "segment": "entradas"
+    },
+    {
+      "title": "Ostras Gratinadas",
+      "description": "Ostras frescas gratinadas com manteiga de ervas e queijo gratinado.",
+      "image": "images/entradas/ostras-gratinadas.jpeg",
+      "segment": "entradas"
+    },
+    {
+      "title": "Tábua de Frios para 10 Pessoas",
+      "description": "Composição charmosa de frios selecionados para ocasiões especiais.",
+      "image": "images/entradas/tabua-frios-10p1.jpeg",
+      "segment": "entradas"
+    },
+    {
+      "title": "Tábua de Frios para 10 Pessoas",
+      "description": "Composição charmosa de frios selecionados para ocasiões especiais.",
+      "image": "images/entradas/tabua-frios-10p2.jpeg",
+      "segment": "entradas"
+    },
     {
       "title": "Porchetta Italiana",
       "description": "Pele crocante, ervas finas e limão siciliano.",
@@ -64,6 +93,48 @@
       "title": "Bacalhau à Portuguesa",
       "description": "Confitado no azeite com batatas ao murro.",
       "image": "images/principais/bacalhau-portuguesa.jpg",
+      "segment": "principais"
+    },
+    {
+      "title": "Camarão ao Champagne com Arroz de Passas e Maçã",
+      "description": "Camarões salteados ao champagne, servidos com arroz cremoso com passas e cubos de maçã.",
+      "image": "images/principais/camarao-champagne-arroz-maca.jpeg",
+      "segment": "principais"
+    },
+    {
+      "title": "Polvo Macio",
+      "description": "Polvo cozido até a maciez ideal",
+      "image": "images/principais/polvo-macio.mp4",
+      "segment": "principais"
+    },
+    {
+      "title": "Polvo com Risoto de Limão Siciliano e Camarão",
+      "description": "Polvo cozido, sobre risoto cremoso de limão siciliano e camarões salteados.",
+      "image": "images/principais/polvo-risoto-limao-camarao.jpeg",
+      "segment": "principais"
+    },
+    {
+      "title": "Camarão Amostradinho",
+      "description": "Camarões empanados e fritos, crocantes por fora e suculentos por dentro.",
+      "image": "images/principais/camarao-amostradinho.jpeg",
+      "segment": "principais"
+    },
+    {
+      "title": "Bacalhau do Lima",
+      "description": "Receita especial do chef Lima com lascas de bacalhau, batatas e cebolada.",
+      "image": "images/principais/bacalhau-lima.jpeg",
+      "segment": "principais"
+    },
+    {
+      "title": "Bacalhau à Portuguesa com Toque do Chef",
+      "description": "Versão autoral do clássico português, com finalização especial do chef.",
+      "image": "images/principais/bacalhau-portuguesa-chef.jpeg",
+      "segment": "principais"
+    },
+    {
+      "title": "Lagosta na Manteiga",
+      "description": "Lagosta grelhada ao ponto, regada com manteiga de ervas e alho.",
+      "image": "images/principais/lagosta-manteiga.jpeg",
       "segment": "principais"
     },
 

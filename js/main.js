@@ -173,7 +173,7 @@ function buildCarousel(slidesHTML, extraClass) {
   `;
 }
 
-function bindCarousel(root) {
+function bindCarousel(root, onUserNav) {
   const viewport = root.querySelector('.carousel__viewport');
   const track    = root.querySelector('.carousel__track');
   const prevBtn  = root.querySelector('.carousel__btn--prev');
@@ -204,8 +204,8 @@ function bindCarousel(root) {
     nextBtn.disabled = idx >= maxIdx();
   }
 
-  prevBtn.addEventListener('click', () => moveTo(idx - 1));
-  nextBtn.addEventListener('click', () => moveTo(idx + 1));
+  prevBtn.addEventListener('click', () => { moveTo(idx - 1); onUserNav?.(); });
+  nextBtn.addEventListener('click', () => { moveTo(idx + 1); onUserNav?.(); });
 
   let resizeTimer;
   window.addEventListener('resize', () => {
@@ -253,11 +253,17 @@ function bindCarousel(root) {
 }
 
 function dishCardHTML(dish, segmentTag) {
+  const src = escHtml(dish.image || '');
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(src);
+  const media = isVideo
+    ? `<video class="dish-card__img" src="${src}" autoplay muted loop playsinline preload="none"></video>`
+    : `<img class="dish-card__img" src="${src}" alt="${escHtml(dish.title)}" loading="lazy" />`;
+
   return `
     <article class="carousel__slide">
       <div class="dish-card">
         <div class="dish-card__img-wrap">
-          <img class="dish-card__img" src="${escHtml(dish.image)}" alt="${escHtml(dish.title)}" loading="lazy" />
+          ${media}
         </div>
         <div class="dish-card__body">
           <span class="dish-card__tag">${escHtml(segmentTag || dish.segment)}</span>
@@ -340,8 +346,10 @@ async function renderMenu() {
     carouselsRoot.setAttribute('data-active', segments[i].id);
   }
 
-  // Bind all carousels
-  const controls = Array.from(carouselsRoot.querySelectorAll('.carousel')).map(bindCarousel);
+  // Bind all carousels — pausa auto-advance ao navegar manualmente
+  const controls = Array.from(carouselsRoot.querySelectorAll('.carousel')).map(
+    carousel => bindCarousel(carousel, () => clearInterval(autoTimer))
+  );
 
   // Random starting slide (after layout paint)
   setTimeout(() => {
@@ -375,6 +383,9 @@ async function renderMenu() {
   }
 
   autoTimer = setInterval(autoAdvance, 4000);
+
+  // Lazy autoplay para vídeos no cardápio
+  carouselsRoot.querySelectorAll('video[preload="none"]').forEach(v => videoObserver.observe(v));
 
   // Reveal animation
   observeReveal(carouselsRoot.querySelectorAll('.dish-card'));
@@ -584,7 +595,9 @@ renderMenu();
 function initServicesCarousel() {
   const el = document.getElementById('servicesCarousel');
   if (!el) return;
-  const ctrl = bindCarousel(el);
+  const servicesTimer = { id: null };
+
+  const ctrl = bindCarousel(el, () => clearInterval(servicesTimer.id));
 
   setTimeout(() => {
     if (ctrl && ctrl.getMaxIdx() > 0) {
@@ -592,7 +605,7 @@ function initServicesCarousel() {
     }
   }, 120);
 
-  setInterval(() => {
+  servicesTimer.id = setInterval(() => {
     if (!ctrl) return;
     ctrl.moveTo(ctrl.getIdx() >= ctrl.getMaxIdx() ? 0 : ctrl.getIdx() + 1);
   }, 4000);
