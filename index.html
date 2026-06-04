@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +7,7 @@
   <!-- Anti-flash: aplica o tema salvo antes do CSS carregar -->
   <script>
     (function(){
-      var t = localStorage.getItem('chefflima-theme') ||
-      (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      var t = localStorage.getItem('chefflima-theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
     }());
   </script>
